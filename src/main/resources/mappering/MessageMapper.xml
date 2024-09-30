@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laojiahuo.ictproject.mapper.MessageMapper">
+
+<!--信息插入-->
+<insert id="saveMessage" parameterType="com.laojiahuo.ictproject.PO.MessagePO">
+    insert into tb_message(user_code,role,content,create_time)
+    values (#{userCode},#{role},#{content},#{createTime})
+</insert>
+    
+<!--信息查询-->
+    <select id="findMessage" resultType="com.laojiahuo.ictproject.PO.MessagePO">
+        SELECT *
+        FROM tb_message
+        WHERE user_code = #{userCode}
+        ORDER BY create_time DESC
+            LIMIT 2
+    </select>
+
+    
+</mapper>

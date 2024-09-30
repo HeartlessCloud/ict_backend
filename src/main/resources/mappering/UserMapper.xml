@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laojiahuo.ictproject.mapper.UserMapper">
+
+
+
+    <insert id="userAdd" parameterType="com.laojiahuo.ictproject.PO.UserPO" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user(user_code, username, email, password, headshot, create_time, update_time)
+        values (#{userCode}, #{username}, #{email}, #{password}, #{headshot}, NOW(), NOW())
+    </insert>
+
+    <update id="updateChatCode">
+        update tb_chatgpt_chat set chat_code = #{chatCode} where id = #{id}
+    </update>
+
+    <update id="updateUserCode">
+        update tb_user set user_code = #{userCode} where id = #{id}
+    </update>
+
+    <update id="userInfoUpdate">
+        update tb_user
+        <set>
+            <if test="school != null">
+                school = #{school},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="headshot != null">
+                headshot = #{headshot},
+            </if>
+            <if test="studentNum != null">
+                student_num = #{studentNum},
+            </if>
+        </set>
+        where user_code = #{userCode}
+    </update>
+
+
+    <update id="updatePassword">
+        update tb_user set password = #{password} where email = #{email}
+    </update>
+
+    <update id="userPasswordUpdate">
+        update tb_user set password = #{newPassword} where user_code = #{userCode}
+    </update>
+
+
+    <select id="getUserByCode" resultType="com.laojiahuo.ictproject.PO.UserPO">
+        select * from tb_user where user_code = #{userCode}
+    </select>
+
+
+    <select id="getUserByEmail" resultType="com.laojiahuo.ictproject.PO.UserPO">
+        select * from tb_user where email = #{email}
+    </select>
+
+
+    <select id="isOtherHaveEamil" resultType="java.lang.Integer">
+        select count(*) from tb_user where email = #{email} and user_code != #{userCode}
+    </select>
+
+</mapper>
