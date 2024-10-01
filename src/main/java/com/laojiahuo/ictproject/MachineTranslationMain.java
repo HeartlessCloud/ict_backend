@@ -1,11 +1,15 @@
 package com.laojiahuo.ictproject;
 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -17,6 +21,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
 /**
  * 1.机器翻译2.0,请填写在讯飞开放平台-控制台-对应能力页面获取的APPID、APISecret、APIKey。
  * 2.目前仅支持中文与其他语种的互译，不包含中文的两个语种之间不能直接翻译。
@@ -40,7 +45,7 @@ public class MachineTranslationMain {
     // JSON解析
     private static final Gson gson=new Gson();
 
-    public static JSONObject translate(String text,String FROM,String TO){
+    public static JSONObject translate(String text, String FROM, String TO){
         MachineTranslationMain demo = new MachineTranslationMain();
         try {
             String resp = demo.doRequest(text,FROM,TO);
@@ -55,23 +60,6 @@ public class MachineTranslationMain {
         }
         return null;
     }
-    // 主函数
-//    public static void main(String[] args) {
-//        long startTime=System.currentTimeMillis();
-//        MachineTranslationMain demo = new MachineTranslationMain();
-//        try {
-//            String resp = demo.doRequest();
-//            System.out.println("resp=>" + resp);
-//            JsonParse myJsonParse = gson.fromJson(resp, JsonParse.class);
-//            String textBase64Decode=new String(Base64.getDecoder().decode(myJsonParse.payload.result.text), "UTF-8");
-//            JSONObject jsonObject = JSON.parseObject(textBase64Decode);
-//            System.out.println("text字段Base64解码后=>"+jsonObject);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        long endTime=System.currentTimeMillis();
-//        System.out.println("本次调用耗时: "+(endTime-startTime)+" ms");
-//    }
     // 请求方法
     public String doRequest(String text,String FROM,String TO) throws Exception {
         URL realUrl = new URL(buildRequetUrl());

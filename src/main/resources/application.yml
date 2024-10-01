@@ -1,11 +1,8 @@
 spring:
   application:
     name: ictProject
-  datasource:
-    username: root
-    password: 1234
-    url: jdbc:mysql://localhost:3306/ictdatabase?useUnicode=true&characterEncoding=UTF-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: dev
   servlet:
     multipart:
       max-file-size: 150MB     # 设置单个文件大小
@@ -18,11 +15,6 @@ spring:
     listener:
       simple:
         prefetch: 1    #（设置preFetch这个值，可以控制预取消息的上限）每次只能获取一条消息，处理完成才能获取下一个消息
-  data:
-    redis:
-      database: 1
-      host: localhost
-      port: 6379
 mybatis-plus:
   mapper-locations: classpath:mappering/*.xml
 minio:
@@ -30,7 +22,6 @@ minio:
   accessKey: 3XDEV1ZB2GDNUW5Z9IPW
   secretKey: F0+RUWjW2MV7yH6Uhe1t9Ie2DzrTOIAUhUmiXkqO
   bucketName: public
-
 translation:
   requestUrl: "https://itrans.xf-yun.com/v1/its"
   appId: "452f8576"
